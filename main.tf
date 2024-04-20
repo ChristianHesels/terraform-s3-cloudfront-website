@@ -16,6 +16,14 @@ terraform {
 # Configure the AWS Provider
 provider "aws" {
   region = var.aws_region
+
+  default_tags {
+    tags = {
+      Project     = var.project_name
+      Terraform   = "true"
+      Environment = var.env 
+    }
+  }
 }
 
 provider "aws" {
@@ -28,7 +36,7 @@ module "vpc_a" {
   vpc_cidr         = var.vpc_cidr_a #"10.1.0.0/16"
   private_sn_count = 1
   public_sn_count  = 1
-  name             = "VPC-A"
+  name             = "${var.project_name}-${var.env}-VPC-A"
   public_cidrs     = [for i in range(1, 255, 2) : cidrsubnet(var.vpc_cidr_a, 8, i)]
   private_cidrs    = [for i in range(2, 255, 2) : cidrsubnet(var.vpc_cidr_a, 8, i)]
 }

@@ -17,3 +17,13 @@ variable "vpc_cidr_b" {
 variable "domain_name" {
   default = "your.domain.de"
 }
+
+variable "project_name" {
+  description = "The project name used for resource naming and tagging."
+  default     = "project name"
+}
+
+variable "env" {
+  description = "Project environment"
+  default = "dev"
+}
