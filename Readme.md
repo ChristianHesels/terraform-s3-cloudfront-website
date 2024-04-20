@@ -2,7 +2,7 @@
 
 ## `terraform init`
 
-Add your `domain_name` to the variables.tf file in /terraform and supply the name of the S3 Bucket that should contain the Terraform state in the Terraform backend in main.tf.
+Add your `domain_name` to the variables.tf file and supply the name of the S3 Bucket that should contain the Terraform state in the Terraform backend in main.tf.
 
 ## `terraform apply`
 
