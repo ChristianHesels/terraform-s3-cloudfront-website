@@ -51,10 +51,6 @@ on:
 
 jobs:
   build_and_deploy:
-    env:
-      PROD_S3_NAME: ${{ vars.PROD_S3_NAME }}
-      DEV_S3_NAME: ${{ vars.DEV_S3_NAME }}
-
     runs-on: ubuntu-latest
 
     steps:
@@ -81,12 +77,12 @@ jobs:
       - name: Deploy to Prod
         if: github.ref == 'refs/heads/main'
         run: |
-          aws s3 sync ./build/. s3://${{ env.PROD_S3_NAME}}
+          aws s3 sync ./build/. s3://${{ vars.PROD_S3_NAME}}
           aws cloudfront create-invalidation --distribution-id ${{ secrets.PROD_DISTRIBUTION_ID }} --paths "/*"
 
       - name: Deploy to Dev
         if: github.ref == 'refs/heads/dev'
         run: |
-          aws s3 sync ./build/. s3://${{ env.DEV_S3_NAME }}
+          aws s3 sync ./build/. s3://${{ vars.DEV_S3_NAME }}
           aws cloudfront create-invalidation --distribution-id ${{ secrets.DEV_DISTRIBUTION_ID }} --paths "/*"
 ```
