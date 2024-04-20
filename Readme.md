@@ -13,7 +13,7 @@ The Certificate Validation step can take a few Minutes.
 
 ## Connecting AWS with Github Actions
 
-To use Github Actions with AWS a IAM Identity Provider is needed. Add a Provider `token.actions.githubusercontent.com` with the Audience `sts.amazonaws.com`. Afterwards create a new Role containing the S3 Resources, the Github Repo and the Cloudfront Resources which can be invalidated. The Policy could look something like this:
+To use Github Actions with AWS a IAM Identity Provider is needed. Add a Provider `token.actions.githubusercontent.com` with the Audience `sts.amazonaws.com`. Afterwards create a new Role containing the S3 Resources, the Github Repo and the Cloudfront Resources which should be invalidated. The Policy could look something like this:
 
 ```json
 {
