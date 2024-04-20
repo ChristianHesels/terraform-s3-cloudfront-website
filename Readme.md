@@ -33,3 +33,60 @@ To use Github Actions with AWS a IAM Identity Provider is needed. Add a Provider
   ]
 }
 ```
+
+The Github Workflow could look like this:
+
+```yaml
+name: Deploy
+
+permissions:
+  id-token: write
+  contents: read
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+jobs:
+  build_and_deploy:
+    env:
+      PROD_S3_NAME: ${{ vars.PROD_S3_NAME }}
+      DEV_S3_NAME: ${{ vars.DEV_S3_NAME }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE }}
+          aws-region: eu-central-1
+
+      - name: Deploy to Prod
+        if: github.ref == 'refs/heads/main'
+        run: |
+          aws s3 sync ./build/. s3://${{ env.PROD_S3_NAME}}
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.PROD_DISTRIBUTION_ID }} --paths "/*"
+
+      - name: Deploy to Dev
+        if: github.ref == 'refs/heads/dev'
+        run: |
+          aws s3 sync ./build/. s3://${{ env.DEV_S3_NAME }}
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.DEV_DISTRIBUTION_ID }} --paths "/*"
+```
