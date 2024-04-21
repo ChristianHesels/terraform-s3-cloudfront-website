@@ -6,14 +6,14 @@ Add your `domain_name`, `project_name` and `env` to the variables.tf file and su
 
 ## `terraform apply`
 
-You have to manually add the DNS Records from the created Hosted Zone to your registered Domain DNS entries when reaching the `module.route53.aws_acm_certificate_validation.cert_validation: Still creating...` task.
+You have to manually add the DNS Records from the created Hosted Zone to your registered Domain DNS entries (Route53) when reaching the `module.route53.aws_acm_certificate_validation.cert_validation: Still creating...` task.
 
-If working with Subodmains make sure to add the correct DNS Records to the main Hosted Zone (for example add dev.yourdomain.de as a NS Record to the yourdomain.de Hosted Zone and add the NS Entries that were automatically generated from AWS from your dev.yourdomain.de hosted Zone). When using a root domain, make sure to add the DNS Records from your registered Domain to the new Hosted Zone.
+If working with Subodmains make sure to add the correct DNS Records to the main Hosted Zone (for example add `dev.yourdomain.de` as a NS Record to the `yourdomain.de` Hosted Zone and add the NS Entries that were automatically generated from AWS from your `dev.yourdomain.de` hosted Zone).
 The Certificate Validation step can take a few Minutes.
 
 ## Use Modules as Git Sources
 
-To use the Modules from this Repo in another Repo simply copy the `example.main.tf` inside the other Repo and add the `variables.tf` with your values to it. Remember to set the S3 Backend in your main.tf correctly.
+To use the Modules from this Repo in another Repo simply copy the `example.main.tf` as `main.tf` inside your new Repo and add the `variables.tf` with your values to it. Remember to set the S3 Backend in your main.tf correctly.
 
 ## Connecting AWS with Github Actions
 
