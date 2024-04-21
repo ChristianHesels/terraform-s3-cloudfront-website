@@ -26,6 +26,11 @@ provider "aws" {
   }
 }
 
+provider "aws" {
+  region = "us-east-1"
+  alias  = "us-east-1"
+}
+
 module "s3-bucket" {
   source      = "./s3-bucket"
   bucket_name = var.domain_name
