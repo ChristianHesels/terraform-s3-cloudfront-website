@@ -11,6 +11,10 @@ You have to manually add the DNS Records from the created Hosted Zone to your re
 If working with Subodmains make sure to add the correct DNS Records to the main Hosted Zone (for example add dev.totalthunfisch.de as a NS Record to the totalthunfisch.de Hosted Zone and add the NS Entries that were automatically generated from AWS from your dev.totalthunfisch.de hosted Zone). When using a root domain, make sure to add the DNS Records from your registered Domain to the new Hosted Zone.
 The Certificate Validation step can take a few Minutes.
 
+## Use Modules as Git Sources
+
+To use the Modules from this Repo in another Repo simply copy the `example.main.tf` inside the other Repo and add the `variables.tf` with your values to it.
+
 ## Connecting AWS with Github Actions
 
 To use Github Actions with AWS a IAM Identity Provider is needed. Add a Provider `token.actions.githubusercontent.com` with the Audience `sts.amazonaws.com`. Afterwards create a new Role containing the S3 Resources, the Github Repo and the Cloudfront Resources which should be invalidated. The Policy could look something like this:
