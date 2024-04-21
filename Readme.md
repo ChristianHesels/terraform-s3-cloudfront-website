@@ -13,7 +13,7 @@ The Certificate Validation step can take a few Minutes.
 
 ## Use Modules as Git Sources
 
-To use the Modules from this Repo in another Repo simply copy the `example.main.tf` inside the other Repo and add the `variables.tf` with your values to it.
+To use the Modules from this Repo in another Repo simply copy the `example.main.tf` inside the other Repo and add the `variables.tf` with your values to it. Remember to set the S3 Backend in your main.tf correctly.
 
 ## Connecting AWS with Github Actions
 
