@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket = "terraform-state-bucket-dev.totalthunfisch.de"
+    bucket = "your-s3-bucket-name"
     key    = "terraform/state"
     region = "eu-central-1"
   }
