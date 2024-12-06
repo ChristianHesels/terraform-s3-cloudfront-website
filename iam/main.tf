@@ -34,7 +34,7 @@ resource "aws_iam_role" "github_iam_role" {
   })
 }
 
-resource "aws_iam_policy" "totalthunfisch_policy" {
+resource "aws_iam_policy" "iam_policy" {
   name = "${var.policy_name}"
   description = "Policy for accessing S3 and CloudFront"
 
@@ -69,5 +69,5 @@ resource "aws_iam_policy" "totalthunfisch_policy" {
 
 resource "aws_iam_role_policy_attachment" "attach_policy" {
   role       = aws_iam_role.github_iam_role.name
-  policy_arn = aws_iam_policy.totalthunfisch_policy.arn
+  policy_arn = aws_iam_policy.iam_policy.arn
 }
