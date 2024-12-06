@@ -90,7 +90,7 @@ module "create-alias" {
 }
 
 module "create-iam" {
-  source      = "git::https://github.com/christianhesels/terraform-s3-cloudfront-website.git//iam"
+  source      = "git::https://github.com/ChristianHesels/iam-githubactions-infra"
   bucket_name_global_infra = var.bucket_name_global_infra
 
   iam_role_name             = "${var.project_name}-role" 

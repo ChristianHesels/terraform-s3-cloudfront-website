@@ -19,7 +19,7 @@ To use the Modules from this Repo in another Repo simply copy the `example.main.
 
 To connect AWS with Github Actions we need to create an identity provider for github actions: https://github.com/ChristianHesels/infra
 
-Afterwards this identity provider needs a policy and a role. This can be done by using the iam Configuration as a module.
+Afterwards this identity provider needs a policy and a role. This can be done by using the iam Configuration as a module: https://github.com/ChristianHesels/iam-githubactions-infra
 
 Add the created AWS Role as AWS_ROLE Variable to Github Actions.
 
