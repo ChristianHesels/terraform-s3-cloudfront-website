@@ -17,26 +17,9 @@ To use the Modules from this Repo in another Repo simply copy the `example.main.
 
 ## Connecting AWS with Github Actions
 
-To use Github Actions with AWS a IAM Identity Provider is needed. Add a Provider `token.actions.githubusercontent.com` with the Audience `sts.amazonaws.com`. Afterwards create a new Role containing the S3 Resources, the Github Repo and the Cloudfront Resources which should be invalidated. The Policy could look something like this:
+To connect AWS with Github Actions we need to create an identity provider for github actions: https://github.com/ChristianHesels/infra
 
-```json
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "VisualEditor0",
-      "Effect": "Allow",
-      "Action": ["s3:PutObject", "s3:GetObject", "s3:ListBucket"],
-      "Resource": ["arn:aws:s3:::yourdomain.de", "arn:aws:s3:::yourdomain.de/*"]
-    },
-    {
-      "Effect": "Allow",
-      "Action": ["cloudfront:CreateInvalidation"],
-      "Resource": ["arn:aws:cloudfront::0000000000:distribution/XXXXXXXXXX"]
-    }
-  ]
-}
-```
+Afterwards this identity provider needs a policy and a role. This can be done by using the iam Configuration as a module.
 
 The Github Workflow could look like this:
 
