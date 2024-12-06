@@ -21,6 +21,8 @@ To connect AWS with Github Actions we need to create an identity provider for gi
 
 Afterwards this identity provider needs a policy and a role. This can be done by using the iam Configuration as a module.
 
+Add the created AWS Role as AWS_ROLE Variable to Github Actions.
+
 The Github Workflow could look like this:
 
 ```yaml
