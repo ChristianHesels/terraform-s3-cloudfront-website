@@ -88,3 +88,20 @@ module "create-alias" {
     module.route53,
   ]
 }
+
+module "create-iam" {
+  source      = "git::https://github.com/christianhesels/terraform-s3-cloudfront-website.git//iam"
+  bucket_name_global_infra = var.bucket_name_global_infra
+
+  iam_role_name             = "${var.project_name}-role" 
+  policy_name               = "${var.project_name}-policy" 
+  github_repo               = var.github_repo
+  s3_bucket_arn             = module.s3-bucket.bucket_arn 
+  cloudfront_arn            = module.cloud-front.cloudfront_arn
+
+  depends_on = [
+    module.cloud-front,
+    module.acm-cert,
+    module.route53,
+  ]
+}
