@@ -36,6 +36,6 @@ resource "aws_route53_record" "www_cname_record" {
   name    = format("www.%s", var.domain_name)
   type    = "CNAME"
   zone_id = aws_route53_zone.zone.zone_id
-  records = ["http://${var.www_bucket_website_endpoint}"]
+  records = [var.www_bucket_website_endpoint]
   ttl     = 300
 }
