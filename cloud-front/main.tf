@@ -10,6 +10,24 @@ resource "aws_cloudfront_origin_access_control" "cloudfront_s3_oac" {
   signing_protocol                  = "sigv4"
 }
 
+resource "aws_cloudfront_function" "url_rewrite" {
+  name    = "url-rewrite-${replace(var.s3_name, ".", "-")}"
+  runtime = "cloudfront-js-2.0"
+  publish = true
+  code    = <<-EOF
+    function handler(event) {
+      var request = event.request;
+      var uri = request.uri;
+      if (uri.endsWith('/')) {
+        request.uri += 'index.html';
+      } else if (!uri.includes('.')) {
+        request.uri += '/index.html';
+      }
+      return request;
+    }
+  EOF
+}
+
 resource "aws_cloudfront_distribution" "cloudfront_distribution" {
 
   origin {
@@ -28,13 +46,17 @@ resource "aws_cloudfront_distribution" "cloudfront_distribution" {
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = "S3Origin${var.s3_name}"
 
-
     forwarded_values {
       query_string = false
 
       cookies {
         forward = "none"
       }
+    }
+
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.url_rewrite.arn
     }
 
     viewer_protocol_policy = "redirect-to-https"
